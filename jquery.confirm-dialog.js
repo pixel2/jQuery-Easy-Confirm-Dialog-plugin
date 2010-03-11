@@ -1,5 +1,5 @@
 /**
- * jQuery Confirm Dialog plugin 1.0
+ * jQuery Confirm Dialog plugin 1.1
  *
  * Copyright (c) 2010 Emil Janitzek (http://projectshadowlight.org)
  * Based on Confirm 1.3 by Nadia Alramli (http://nadiana.com/)
