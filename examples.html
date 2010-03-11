@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery Confirm Dialog plugin</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/blitzer/jquery-ui.css" type="text/css" />
+	<script src="jquery.confirm-dialog.js"></script>
+	<script type="text/javascript">
+	$(function() {
+		$(".confirm").confirm();
+		$("#alert").click(function() {
+			alert("You approved the action");
+		});
+		
+		$("#yesno").confirm({locale: { title: 'Select Yes or No', button: ['No','Yes']}});
+		$("#yesno").click(function() {
+			alert("You clicked yes");
+		});
+		
+		$(".customDialog").confirm({dialog: $("#question")});
+		
+		$("#svSE").confirm({locale: $.confirm.locales.svSE});
+		$("#svSE").click(function() {
+			alert("Tack för att du godkände detta!");
+		});
+		
+		$("#french").confirm({locale: {
+			title: 'Etes-vous sûr?',
+			text: 'Etes-vous sûr que vous souhaitez effectuer cette action?',
+			button: ['Annuler',' Confirmer'],
+			closeText: 'fermer'
+		}});
+		$("#french").click(function() {
+			alert("Je vous remercie de votre soumission!");
+		});
+		
+	});
+	</script>
+	<style type="text/css">
+	.ui-dialog { font-size: 11px; }
+	body {
+		font-family: Tahoma;
+		font-size: 12px;
+	}
+	#question {
+		width: 300px!important;
+		height: 60px!important;
+		padding: 10px 0 0 10px;
+	}
+	#question img {
+		float: left;
+	}
+	#question span {
+		float: left;
+		margin: 20px 0 0 10px;
+	}
+	</style>
+</head>
+<body>
+
+<h1>jQuery Confirm Dialog plugin examples</h1>
+<p>This is a jQuery based confirm plugin module that will act as the build in confirm-function in javascript but with the ability to style the dialog window. Only using built in jQuery and jQuery UI functions.</p>
+
+<h3>Stuff needed for this example to work</h3>
+<pre>
+	&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"&gt;&lt;/script&gt;
+	&lt;script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"&gt;&lt;/script&gt;
+	&lt;link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/blitzer/jquery-ui.css" type="text/css" /&gt;
+	&lt;script src="jquery.confirm-dialog.js"&gt;&lt;/script&gt;
+</pre>
+
+<hr />
+
+<pre>
+	$(".confirm").confirm();
+	$("#alert").click(function() {
+		alert("You approved the action");
+	});
+</pre>
+<pre>
+	&lt;a href="#" class="confirm" id="alert"&gt;Normal test&lt;/a&gt;
+	&lt;a href="?confirm=true" class="confirm"&gt;Normal test with a link&lt;/a&gt;
+	&lt;a href="?confirm=true" class="confirm" title="Are you sure you want to click on this link?"&gt;Normal test with a link&lt;/a&gt;
+</pre>
+
+<ul>
+<li><a href="#" class="confirm" id="alert">Normal test</a>
+<li><a href="?confirm=true" class="confirm">Normal test with a link</a>
+<li><a href="?confirm=true" class="confirm" title="Are you sure you want to click on this link?">Test on a link with custom message</a>
+</ul>
+
+<hr />
+
+<pre>
+	$("#yesno").confirm({locale: { title: 'Select Yes or No', button: ['No','Yes']}});
+	$("#yesno").click(function() {
+		alert("You clicked yes");
+	});
+</pre>
+<pre>
+	&lt;a href="#" id="yesno"&gt;Normal test with yes and no&lt;/a&gt;
+</pre>
+
+<ul>
+<li><a href="#" id="yesno">Normal test with yes and no</a>
+</ul>
+
+<hr />
+
+<pre>
+	$(".customDialog").confirm({dialog: $("#question")});
+</pre>
+<pre>
+	&lt;a href="?confirm=true" class="customDialog"&gt;Test with custom confirm dialog&lt;/a&gt;
+</pre>
+	
+<pre>
+	&lt;div class="dialog" id="question"&gt;&lt;img src="question.png" alt="" /&gt;Do you want to continue?&lt;/div&gt;
+</pre>
+
+<ul>
+<li><a href="?confirm=true" class="customDialog">Test with custom confirm dialog</a>
+</ul>
+
+<div class="dialog" id="question"><img src="question.png" alt="" /><span>Do you want to continue?</span></div>
+
+<hr />
+
+<pre>
+	$("#svSE").confirm({locale: $.confirm.locales.svSE});
+	$("#svSE").click(function() {
+		alert("Tack för ditt bidrag!");
+	});
+</pre>
+<pre>
+	&lt;a href="#" id="svSE"&gt;Test with swedish localization&lt;/a&gt;
+</pre>
+
+<ul>
+<li><a href="#" id="svSE">Test with swedish localization</a>
+</ul>
+
+<hr />
+
+<pre>
+	$("#french").confirm({locale: {
+		title: 'Etes-vous sûr?',
+		text: 'Etes-vous sûr que vous souhaitez effectuer cette action?',
+		button: ['Annuler',' Confirmer'],
+		closeText: 'fermer'
+	}});
+	$("#french").click(function() {
+		alert("Je vous remercie de votre soumission!");
+	});
+</pre>
+<pre>
+	&lt;a href="#" id="french"&gt;Test with custom localization&lt;/a&gt;
+</pre>
+
+<ul>
+<li><a href="#" id="french">Test with custom localization</a>
+</ul>
+
