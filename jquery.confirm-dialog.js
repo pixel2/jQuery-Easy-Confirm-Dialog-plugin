@@ -1,5 +1,5 @@
 /**
- * jQuery Confirm Dialog plugin 1.0
+ * jQuery Confirm Dialog plugin 1.1
  *
  * Copyright (c) 2010 Emil Janitzek (http://projectshadowlight.org)
  * Based on Confirm 1.3 by Nadia Alramli (http://nadiana.com/)
@@ -13,14 +13,28 @@
  * any later version.
  */  
 (function($) {
-
-	jQuery.fn.confirm = function(options) {
-	  options = jQuery.extend({
-	    title: 'Are you sure?',
-	    text: 'Are you sure that you want to perform this action?',
-	    icon: 'help',
-	    eventType: 'click'
+  $.confirm = { };
+  $.confirm.locales = { };
+  $.confirm.locales.enUS = {
+    title: 'Are you sure?',
+    text: 'Are you sure that you want to perform this action?',
+    button: ['Cancel', 'Confirm'],
+    closeText: 'close'
+  };
+  $.confirm.locales.svSE = {
+    title: 'Är du säker?',
+    text: 'Är du säker på att du vill genomföra denna åtgärden?',
+    button: ['Avbryt', 'Bekräfta'],
+    closeText: 'stäng'
+  };
+  
+	$.fn.confirm = function(options) {
+	  var options = jQuery.extend({
+	    eventType: 'click',
+	    icon: 'help'
 	  }, options);
+	  
+	  var locale = jQuery.extend({}, $.confirm.locales.enUS, options.locale);
   
 	  // Shortcut to eventType.
 	  var type = options.eventType;
@@ -29,8 +43,8 @@
 	    var target = this;
 	    var $target = jQuery(target);
     
+      // If no events present then and if there is a valid url, then trigger url change
 	    var urlClick = function() {
-
 	      if (target.href) {
 	        var length = String(target.href).length;
 	        if (target.href.substring(length-1,length) != '#')
@@ -50,19 +64,45 @@
 	        $target.unbind(type); 
 	      }
 	    }
+	    // Re-bind old events
 	    var rebindHandlers = function() {
-	      // Re-bind old events
 	      if (target._handlers != undefined) {
 	        jQuery.each(target._handlers, function() {
 	          $target.bind(type, this);
 	        });
 	      }
 	    }
-
+      
 	    if ($target.attr('title').length > 0)
-	      options.text = $target.attr('title');
-    
-	    var dialog = $('<div class="dialog confirm"><strong>'+ options.text +'</strong></div>');      
+        locale.text = $target.attr('title');
+      
+      var dialog = (options.dialog == undefined || typeof(options.dialog) != 'object') ? 
+                     $('<div class="dialog confirm">'+ locale.text +'</div>'):
+                     options.dialog;
+      
+      var buttons = { };
+      buttons[locale.button[1]] = function() { 
+        // Unbind overriding handler and let default actions pass through
+        $target.unbind(type, handler);
+      
+        // Close dialog
+        $(dialog).dialog("close");
+      
+        // Check if there is any events on the target
+        if (jQuery.data(target, 'events')) {                           
+          // Trigger click event.
+          $target.click();                                      
+        } else {
+          // No event trigger new url
+          urlClick();
+        }
+      
+        init();
+
+      };
+      buttons[locale.button[0]] = function() { 
+        $(dialog).dialog("close"); };
+      
 	    $(dialog).dialog({ autoOpen: false,
 			                   resizable: false,
 	                       draggable: true,
@@ -71,32 +111,10 @@
 	                       height: 120,
 	                       minHeight: 120,
 	                       maxHeight: 200,
-	                       buttons: { "Cancel": function() { 
-	                                    $(dialog).dialog("close");
-	                                  },
-	                                  "Confrim": function() { 
-	                                    // Unbind overriding handler and let default actions pass through
-	                                    $target.unbind(type, handler);
-                                    
-	                                    // Close dialog
-	                                    $(dialog).dialog("close");
-                                    
-	                                    // Check if there is any events on the target
-	                                    if (jQuery.data(target, 'events')) {                           
-	                                      // Trigger click event.
-	                                      $target.click();                                      
-	                                    } else {
-	                                      // No event trigger new url
-	                                      urlClick();
-	                                    }
-                                    
-	                                    init();
-                           
-	                                  }},
-	                       title: options.title,
-	                       closeText: 'close',
+	                       buttons: buttons,
+	                       title: locale.title,
+	                       closeText: locale.closeText,
 	                       modal: true});
-    
     
 	    // Handler that will override all other actions
 	    var handler = function(event) {
