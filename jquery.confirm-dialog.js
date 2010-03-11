@@ -2,7 +2,7 @@
  * jQuery Confirm Dialog plugin 1.0
  *
  * Copyright (c) 2010 Emil Janitzek (http://projectshadowlight.org)
- * Based in confirm 1.3 by Nadia Alramli (http://nadiana.com/)
+ * Based on Confirm 1.3 by Nadia Alramli (http://nadiana.com/)
  *
  * Samples and instructions at: 
  * http://projectshadowlight.org/jquery-confirm-dialog/
@@ -16,8 +16,8 @@
 
 	jQuery.fn.confirm = function(options) {
 	  options = jQuery.extend({
-	    title: 'Är du säker?',
-	    text: 'Är du säker på att du vill genomföra denna åtgärden?',
+	    title: 'Are you sure?',
+	    text: 'Are you sure that you want to perform this action?',
 	    icon: 'help',
 	    eventType: 'click'
 	  }, options);
@@ -62,7 +62,7 @@
 	    if ($target.attr('title').length > 0)
 	      options.text = $target.attr('title');
     
-	    var dialog = $('<div class="dialog confirm"><img src="/bilder/ikoner/silk/'+ options.icon +'.png" class="icon" /><strong>'+ options.text +'</strong></div>');      
+	    var dialog = $('<div class="dialog confirm"><strong>'+ options.text +'</strong></div>');      
 	    $(dialog).dialog({ autoOpen: false,
 			                   resizable: false,
 	                       draggable: true,
@@ -71,10 +71,10 @@
 	                       height: 120,
 	                       minHeight: 120,
 	                       maxHeight: 200,
-	                       buttons: { "Avbryt": function() { 
+	                       buttons: { "Cancel": function() { 
 	                                    $(dialog).dialog("close");
 	                                  },
-	                                  "Bekräfta": function() { 
+	                                  "Confrim": function() { 
 	                                    // Unbind overriding handler and let default actions pass through
 	                                    $target.unbind(type, handler);
                                     
@@ -94,14 +94,8 @@
                            
 	                                  }},
 	                       title: options.title,
-	                       closeText: 'stäng',
-	                       modal: true,
-	                       open: function() {
-	                         if (!$(this).parent("div").find("button:first").hasClass("cancel")) {
-	                           $(this).parent("div").find("button:first").addClass("cancel").wrapInner("<span />");
-	                           $(this).parent("div").find("button:last").addClass("go").addClass("default").wrapInner("<span />");
-	                         }
-	                       }});
+	                       closeText: 'close',
+	                       modal: true});
     
     
 	    // Handler that will override all other actions
