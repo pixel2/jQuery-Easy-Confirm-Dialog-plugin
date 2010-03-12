@@ -1,5 +1,9 @@
-jQuery Confirm Dialog plugin examples
+jQuery Easy Confirm Dialog plugin examples
 This is a jQuery based confirm plugin module that will act as the build in confirm-function in javascript but with the ability to style the dialog window. Only using built in jQuery and jQuery UI functions.
+
+No need for manual callbacks, default event will be put on halt and only executed if user confirms.
+
+If there is any actions on the target these will be executed, it there are no actions but a URL present. The user will be redirected.
 
 Know issues:
 * Will only work with events bound with jQuery
