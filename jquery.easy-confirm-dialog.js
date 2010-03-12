@@ -1,11 +1,11 @@
 /**
- * jQuery Confirm Dialog plugin 1.1
+ * jQuery Easy Confirm Dialog plugin 1.1
  *
  * Copyright (c) 2010 Emil Janitzek (http://projectshadowlight.org)
  * Based on Confirm 1.3 by Nadia Alramli (http://nadiana.com/)
  *
  * Samples and instructions at: 
- * http://projectshadowlight.org/jquery-confirm-dialog/
+ * http://projectshadowlight.org/jquery-easy-confirm-dialog/
  *
  * This script is free software: you can redistribute it and/or modify it 
  * under the terms of the GNU General Public License as published by the Free 
@@ -13,28 +13,28 @@
  * any later version.
  */  
 (function($) {
-  $.confirm = { };
-  $.confirm.locales = { };
-  $.confirm.locales.enUS = {
+  $.easyconfirm = { };
+  $.easyconfirm.locales = { };
+  $.easyconfirm.locales.enUS = {
     title: 'Are you sure?',
     text: 'Are you sure that you want to perform this action?',
     button: ['Cancel', 'Confirm'],
     closeText: 'close'
   };
-  $.confirm.locales.svSE = {
+  $.easyconfirm.locales.svSE = {
     title: 'Är du säker?',
     text: 'Är du säker på att du vill genomföra denna åtgärden?',
     button: ['Avbryt', 'Bekräfta'],
     closeText: 'stäng'
   };
   
-	$.fn.confirm = function(options) {
+	$.fn.easyconfirm = function(options) {
 	  var options = jQuery.extend({
 	    eventType: 'click',
 	    icon: 'help'
 	  }, options);
 	  
-	  var locale = jQuery.extend({}, $.confirm.locales.enUS, options.locale);
+	  var locale = jQuery.extend({}, $.easyconfirm.locales.enUS, options.locale);
   
 	  // Shortcut to eventType.
 	  var type = options.eventType;
