@@ -29,6 +29,18 @@
   };
   
 	$.fn.easyconfirm = function(options) {
+	  // Punch a duck
+      // http://paulirish.com/2010/duck-punching-with-jquery/
+	  var _attr = $.fn.attr;
+	  $.fn.attr = function (attr, value) {
+		// Let the original attr() do its work.
+		var returned = _attr.apply(this, arguments);
+		// Fix for jQuery 1.6+
+		if (attr == 'title' && returned == undefined)
+			returned = '';
+		return returned;
+	  };
+
 	  var options = jQuery.extend({
 	    eventType: 'click',
 	    icon: 'help'
@@ -108,7 +120,6 @@
 	                       draggable: true,
 	                       closeOnEscape: true,
 	                       width: 'auto',
-	                       height: 120,
 	                       minHeight: 120,
 	                       maxHeight: 200,
 	                       buttons: buttons,
