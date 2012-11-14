@@ -71,9 +71,9 @@
                     var events = jQuery.data(target, 'events');
                     if (events) {
                         target._handlers = new Array();
-                        for (var i in events[type]) {
-                            target._handlers.push(events[type][i]);
-                        }
+                        $.each(events[type], function(){
+                            target._handlers.push(this);
+                        });
 
                         $target.unbind(type);
                     }
