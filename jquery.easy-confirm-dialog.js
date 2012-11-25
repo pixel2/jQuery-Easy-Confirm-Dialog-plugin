@@ -27,6 +27,12 @@
         button: ['Avbryt', 'Bekräfta'],
         closeText: 'stäng'
     };
+    $.easyconfirm.locales.itIT = {
+        title: 'Sei sicuro?',
+        text: 'Sei sicuro di voler compiere questa azione?',
+        button: ['Annulla', 'Conferma'],
+        closeText: 'chiudi'
+    };
 
     $.fn.easyconfirm = function(options) {
 
