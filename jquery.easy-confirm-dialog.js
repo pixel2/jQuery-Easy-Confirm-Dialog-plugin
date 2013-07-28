@@ -1,5 +1,5 @@
 /**
- * jQuery Easy Confirm Dialog plugin 1.2
+ * jQuery Easy Confirm Dialog plugin 1.3
  *
  * Copyright (c) 2010 Emil Janitzek (http://projectshadowlight.org)
  * Based on Confirm 1.3 by Nadia Alramli (http://nadiana.com/)
@@ -18,13 +18,13 @@
     $.easyconfirm.locales.enUS = {
         title: 'Are you sure?',
         text: 'Are you sure that you want to perform this action?',
-        button: ['Cancel', 'Confirm'],
+        button: ['Cancel', 'OK'],
         closeText: 'close'
     };
     $.easyconfirm.locales.svSE = {
         title: 'Är du säker?',
         text: 'Är du säker på att du vill genomföra denna åtgärden?',
-        button: ['Avbryt', 'Bekräfta'],
+        button: ['Avbryt', 'OK'],
         closeText: 'stäng'
     };
     $.easyconfirm.locales.itIT = {
@@ -51,7 +51,7 @@
 
         var options = jQuery.extend({
             eventType: 'click',
-            icon: 'help'
+            icon: 'help',
             minHeight: 120,
             maxHeight: 200
         }, options);
@@ -72,26 +72,25 @@
                         if (target.href.substring(length - 1, length) != '#') 
                             document.location = target.href;
                     }
-                };
-
-            // If any handlers where bind before triggering, lets save them and add them later
-            var saveHandlers = function() {
-                    var events = jQuery.data(target, 'events');
+                },
+                // If any handlers where bind before triggering, lets save them and add them later
+                saveHandlers = function() {
+                    var events = $._data(target, 'events');
                     if (events) {
                         target._handlers = new Array();
-                        $.each(events[type], function(){
-                            target._handlers.push(this);
-                        });
+                        for (var i in events[type]) {
+                            target._handlers.push(events[type][i]);
+                        }
 
                         $target.unbind(type);
                     }
-                };
-            // Re-bind old events
-            var rebindHandlers = function() {
+                },
+                // Re-bind old events
+                rebindHandlers = function() {
                     if (target._handlers !== undefined) {
-                        jQuery.each(target._handlers, function() {
-                            $target.bind(type, this);
-                        });
+                        for (var i in target._handlers) {
+                            $target.bind(type, target._handlers[i]);
+                        }
                     }
                 };
 
@@ -103,17 +102,21 @@
                 options.dialog;
 
             var buttons = {};
+            buttons[locale.button[0]] = function() {
+                $(dialog).dialog('close');
+            };
             buttons[locale.button[1]] = function() {
                 // Unbind overriding handler and let default actions pass through
                 $target.unbind(type, handler);
 
                 // Close dialog
-                $(dialog).dialog("close");
+                $(dialog).dialog('close');
 
                 // Check if there is any events on the target
-                if (jQuery.data(target, 'events')) {
+                var anyEvents = $._data(target, 'events');
+                if (anyEvents) {
                     // Trigger click event.
-                    $target.click();
+                    $target.trigger(type);
                 }
                 else {
                     // No event trigger new url
@@ -122,9 +125,6 @@
 
                 init();
 
-            };
-            buttons[locale.button[0]] = function() {
-                $(dialog).dialog("close");
             };
 
             $(dialog).dialog({
@@ -138,18 +138,17 @@
                 buttons: buttons,
                 title: locale.title,
                 closeText: locale.closeText,
-                modal: true
+                modal: true,
+                open: function() { $(this).closest('.ui-dialog').find('.ui-dialog-buttonpane button:eq(1)').focus() }
             });
 
             // Handler that will override all other actions
             var handler = function(event) {
-                    $(dialog).dialog('open');
                     event.stopImmediatePropagation();
                     event.preventDefault();
-                    return false;
-                };
-
-            var init = function() {
+                    $(dialog).dialog('open');
+                },
+                init = function() {
                     saveHandlers();
                     $target.bind(type, handler);
                     rebindHandlers();
