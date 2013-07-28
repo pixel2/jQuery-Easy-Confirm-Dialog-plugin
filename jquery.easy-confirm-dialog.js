@@ -52,6 +52,8 @@
         var options = jQuery.extend({
             eventType: 'click',
             icon: 'help'
+            minHeight: 120,
+            maxHeight: 200
         }, options);
 
         var locale = jQuery.extend({}, $.easyconfirm.locales.enUS, options.locale);
@@ -131,8 +133,8 @@
                 draggable: true,
                 closeOnEscape: true,
                 width: 'auto',
-                minHeight: 120,
-                maxHeight: 200,
+                minHeight: options.minHeight,
+                maxHeight: options.maxHeight,
                 buttons: buttons,
                 title: locale.title,
                 closeText: locale.closeText,
