@@ -68,25 +68,25 @@
 
 <h3>Stuff needed for this example to work</h3>
 <pre>
-	&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"&gt;&lt;/script&gt;
-	&lt;script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"&gt;&lt;/script&gt;
-	&lt;link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/blitzer/jquery-ui.css" type="text/css" /&gt;
-	&lt;script src="jquery.easy-confirm-dialog.js"&gt;&lt;/script&gt;
+&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/blitzer/jquery-ui.css" type="text/css" /&gt;
+&lt;script src="jquery.easy-confirm-dialog.js"&gt;&lt;/script&gt;
 </pre>
 <ul>
 <li><a href="http://github.com/wiggin/jQuery-Easy-Confirm-Dialog-plugin/raw/master/jquery.easy-confirm-dialog.js">Download jquery.easy-confirm-dialog.js</a> at github</li>
 </ul>
 
 <pre>
-	$(".confirm").easyconfirm();
-	$("#alert").click(function() {
-		alert("You approved the action");
-	});
+$(".confirm").easyconfirm();
+$("#alert").click(function() {
+	alert("You approved the action");
+});
 </pre>
 <pre>
-	&lt;a href="#" class="confirm" id="alert"&gt;Normal test&lt;/a&gt;
-	&lt;a href="?confirm=true" class="confirm"&gt;Normal test with a link&lt;/a&gt;
-	&lt;a href="?confirm=true" class="confirm" title="Are you sure you want to click on this link?"&gt;Normal test with a link&lt;/a&gt;
+&lt;a href="#" class="confirm" id="alert"&gt;Normal test&lt;/a&gt;
+&lt;a href="?confirm=true" class="confirm"&gt;Normal test with a link&lt;/a&gt;
+&lt;a href="?confirm=true" class="confirm" title="Are you sure you want to click on this link?"&gt;Normal test with a link&lt;/a&gt;
 </pre>
 
 <ul>
@@ -98,13 +98,13 @@
 <hr />
 
 <pre>
-	$("#yesno").easyconfirm({locale: { title: 'Select Yes or No', button: ['No','Yes']}});
-	$("#yesno").click(function() {
-		alert("You clicked yes");
-	});
+$("#yesno").easyconfirm({locale: { title: 'Select Yes or No', button: ['No','Yes']}});
+$("#yesno").click(function() {
+	alert("You clicked yes");
+});
 </pre>
 <pre>
-	&lt;a href="#" id="yesno"&gt;Normal test with yes and no&lt;/a&gt;
+&lt;a href="#" id="yesno"&gt;Normal test with yes and no&lt;/a&gt;
 </pre>
 
 <ul>
@@ -114,14 +114,14 @@
 <hr />
 
 <pre>
-	$(".customDialog").easyconfirm({dialog: $("#question")});
+$(".customDialog").easyconfirm({dialog: $("#question")});
 </pre>
 <pre>
-	&lt;a href="?confirm=true" class="customDialog"&gt;Test with custom confirm dialog&lt;/a&gt;
+&lt;a href="?confirm=true" class="customDialog"&gt;Test with custom confirm dialog&lt;/a&gt;
 </pre>
 	
 <pre>
-	&lt;div class="dialog" id="question"&gt;&lt;img src="question.png" alt="" /&gt;Do you want to continue?&lt;/div&gt;
+&lt;div class="dialog" id="question"&gt;&lt;img src="question.png" alt="" /&gt;Do you want to continue?&lt;/div&gt;
 </pre>
 
 <ul>
@@ -133,13 +133,13 @@
 <hr />
 
 <pre>
-	$("#svSE").easyconfirm({locale: $.easyconfirm.locales.svSE});
-	$("#svSE").click(function() {
-		alert("Tack för ditt bidrag!");
-	});
+$("#svSE").easyconfirm({locale: $.easyconfirm.locales.svSE});
+$("#svSE").click(function() {
+	alert("Tack för ditt bidrag!");
+});
 </pre>
 <pre>
-	&lt;a href="#" id="svSE"&gt;Test with swedish localization&lt;/a&gt;
+&lt;a href="#" id="svSE"&gt;Test with swedish localization&lt;/a&gt;
 </pre>
 
 <ul>
@@ -149,21 +149,59 @@
 <hr />
 
 <pre>
-	$("#french").easyconfirm({locale: {
-		title: 'Etes-vous sûr?',
-		text: 'Etes-vous sûr que vous souhaitez effectuer cette action?',
-		button: ['Annuler',' Confirmer'],
-		closeText: 'fermer'
-	}});
-	$("#french").click(function() {
-		alert("Je vous remercie de votre soumission!");
-	});
+$("#french").easyconfirm({locale: {
+	title: 'Etes-vous sûr?',
+	text: 'Etes-vous sûr que vous souhaitez effectuer cette action?',
+	button: ['Annuler',' Confirmer'],
+	closeText: 'fermer'
+}});
+$("#french").click(function() {
+	alert("Je vous remercie de votre soumission!");
+});
 </pre>
 <pre>
-	&lt;a href="#" id="french"&gt;Test with custom localization&lt;/a&gt;
+&lt;a href="#" id="french"&gt;Test with custom localization&lt;/a&gt;
 </pre>
 
 <ul>
 <li><a href="#" id="french">Test with custom localization</a>
+</ul>
+
+<hr />
+
+<script>
+$(document).ready(function() {
+    $("#add-dynamic").click(function(e) {
+        e.preventDefault();
+        var $parent = $(this).closest("ul");
+        var $link = $("<a></a>").attr("href","#").text("Dynamic link nr. "+ $parent.find("li").length).addClass("dynamic-link");
+        $link.easyconfirm();
+        $parent.append($("<li>").append($link));
+    });
+    
+    $(".dynamic-list").on("click", ".dynamic-link", function(e) {
+        e.preventDefault();
+        alert("Do action with event bubbling");
+    });
+});
+</script>
+
+<pre><code data-lang="javascript">
+$("#add-dynamic").click(function(e) {
+    e.preventDefault();
+    var $parent = $(this).closest("ul");
+    var $link = $("&lt;a>&lt;/a&gt;").attr("href","#").text("Dynamic link nr. "+ $parent.find("li").length).addClass("dynamic-link");
+    $link.easyconfirm();
+    $parent.append($("&lt;li&gt;").append($link));
+});
+
+$(".dynamic-list").on("click", ".dynamic-link", function(e) {
+    e.preventDefault();
+    alert("Do action with event bubbling");
+});
+</code></pre>
+
+<ul class="dynamic-list">
+<li><a href="#" id="add-dynamic">Add dynamic link</a></li>
 </ul>
 

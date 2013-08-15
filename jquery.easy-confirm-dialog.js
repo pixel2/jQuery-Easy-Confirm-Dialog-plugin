@@ -67,11 +67,18 @@
 
             // If no events present then and if there is a valid url, then trigger url change
             var urlClick = function() {
-                    if (target.href) {
-                        var length = String(target.href).length;
-                        if (target.href.substring(length - 1, length) != '#') 
-                            document.location = target.href;
+                    if (hasValidUrl(target.href)) {
+                        document.location = target.href;
                     }
+                },
+                hasValidUrl = function(href) {
+                    if (href) {
+                        var length = String(href).length;
+                        if (href.substring(length - 1, length) != '#') 
+                            return true;
+                    }
+                    
+                    return false;
                 },
                 // If any handlers where bind before triggering, lets save them and add them later
                 saveHandlers = function() {
@@ -114,7 +121,7 @@
 
                 // Check if there is any events on the target
                 var anyEvents = $._data(target, 'events');
-                if (anyEvents) {
+                if (anyEvents || !hasValidUrl(target.href)) {
                     // Trigger click event.
                     $target.trigger(type);
                 }
